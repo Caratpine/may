@@ -1,0 +1,23 @@
+<h1>{{ post['title'] }}</h1>
+<p>{{ post['title'] | length }}</p>
+
+<p>{{ post['text'] }}</p>
+<p>{{ post['date'] | default('2015-01-01') }}</p>
+{{ "<h1>Title</h1>" | safe }}
+<p>{{ code | join(', ') }}</p>
+
+{{ "<script>alert('hello world')</script>" | safe }}
+
+{{ "hello world" | count_substring('o') }}
+
+<script>
+
+    a = {{ post | tojson }};
+    console.log(a);
+</script>
+
+{% for post in posts %}
+   <p>{{ loop.cycle('odd') }} {{ post.title }}</p>
+{% endfor %}
+
+{{ request.url }}

@@ -8,5 +8,5 @@ class ProConfig(Config):
 
 class DevConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost/tofu?charset=utf8'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost/test?charset=utf8'
     SQLALCHEMY_ECHO = True
