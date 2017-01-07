@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config.from_object(DevConfig)
 
 db = SQLAlchemy(app)
-blog_buleprint = Blueprint(
+blog_blueprint = Blueprint(
     'blog',
     __name__,
     template_folder='templates/blog',
@@ -126,10 +126,29 @@ def sidebar_data():
     return recent, top_tags
 
 
-@blog_buleprint.route('/')
-@blog_buleprint.route('/<int:page>')
-def home(page=0):
-    print page
+@app.route('/')
+def index():
+    return redirect(url_for('blog.home'))
+
+
+# @blog_blueprint.route('/')
+# @blog_blueprint.route('/<int:page>')
+# def home(page=0):
+#     print page
+#     posts = Post.query.order_by(Post.publish_date.desc()).paginate(page, 10)
+#     recent, top_tags = sidebar_data()
+#
+#     return render_template(
+#         'home.html',
+#         posts=posts,
+#         recent=recent,
+#         top_tags=top_tags
+#     )
+
+
+@blog_blueprint.route('/')
+@blog_blueprint.route('/<int:page>')
+def home(page=2):
     posts = Post.query.order_by(Post.publish_date.desc()).paginate(page, 10)
     recent, top_tags = sidebar_data()
 
@@ -141,7 +160,7 @@ def home(page=0):
     )
 
 
-@blog_buleprint.route('/post/<int:post_id>')
+@blog_blueprint.route('/post/<int:post_id>')
 def post(post_id):
     form = CommentForm()
     if form.validate_on_submit():
@@ -168,7 +187,7 @@ def post(post_id):
     )
 
 
-@blog_buleprint.route('/tag/<string:tag_name>')
+@blog_blueprint.route('/tag/<string:tag_name>')
 def tag(tag_name):
     tag = Tag.query.filter_by(title=tag_name).first_or_404()
     posts = tag.posts.order_by(Post.publish_date.desc()).all()
@@ -183,7 +202,7 @@ def tag(tag_name):
     )
 
 
-@blog_buleprint.route('/user/<string:username>')
+@blog_blueprint.route('/user/<string:username>')
 def user(username):
     user = User.query.filter(username=username).first_or_404()
     posts = user.posts.order_by(Post.publish_date.desc()).all()
@@ -216,12 +235,7 @@ app.add_url_rule(
         )
     )
 
-
-# @app.route('/')
-# def index():
-#     return redirect(url_for('blog.home'))
-
-app.register_blueprint(blog_buleprint)
+app.register_blueprint(blog_blueprint)
 
 if __name__ == '__main__':
     res = sidebar_data()
