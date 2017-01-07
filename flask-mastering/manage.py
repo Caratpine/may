@@ -1,6 +1,10 @@
 from flask_script import Manager, Server
 from flask_migrate import Migrate, MigrateCommand
-from main import app, db, User, Post, Tag, Comment
+from webapp import create_app
+from webapp.config import DevConfig
+from webapp.models import db, User, Post, Tag, Comment
+
+app = create_app(DevConfig)
 
 migrate = Migrate(app, db)
 manager = Manager(app)
