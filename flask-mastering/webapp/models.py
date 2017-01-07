@@ -1,4 +1,5 @@
 from flask.ext.sqlalchemy import SQLAlchemy
+from webapp.extensions import bcrypt
 
 db = SQLAlchemy()
 
@@ -18,6 +19,12 @@ class User(db.Model):
         backref='user',
         lazy='dynamic'
     )
+
+    def set_password(self, password):
+        self.password = bcrypt.generate_password_hash(password)
+
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password)
 
     def __init__(self, username):
         self.username = username
