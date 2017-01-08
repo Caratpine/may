@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for, flash, render_template
 from webapp.forms import LoginForm, RegisterForm
-from webapp.models import User
+from webapp.models import User, db
 
 main_blueprint = Blueprint(
     'main',
@@ -35,8 +35,7 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        new_user = User()
-        new_user.username = form.username.data
+        new_user = User(form.username.data)
         new_user.set_password(form.password.data)
 
         db.session.add(new_user)

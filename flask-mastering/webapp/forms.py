@@ -38,7 +38,7 @@ class LoginForm(Form):
     def validate(self):
         check_validate = super(LoginForm, self).validate()
 
-        if not check_validate():
+        if not check_validate:
             return False
 
         user = User.query.filter_by(
@@ -58,41 +58,42 @@ class LoginForm(Form):
             return False
         return True
 
-    class RegisterForm(Form):
-        username = StringField('Username', [
-            DataRequired(),
-            Length(manx=255)
-        ])
-        password = PasswordField('Password', [
-            DataRequired(),
-            Length(min=8)
-        ])
-        confirm = PasswordField('confirm Password', [
-            DataRequired(),
-            EqualTo('password')
-        ])
 
-        def validate(self):
-            check_validate = super(RegisterForm, self).validate()
+class RegisterForm(Form):
+    username = StringField('Username', [
+        DataRequired(),
+        Length(max=255)
+    ])
+    password = PasswordField('Password', [
+        DataRequired(),
+        Length(min=8)
+    ])
+    confirm = PasswordField('confirm Password', [
+        DataRequired(),
+        EqualTo('password')
+    ])
 
-            if not check_validate:
-                return False
+    def validate(self):
+        check_validate = super(RegisterForm, self).validate()
 
-            user = User.query.filter_by(
-                username=self.username.data
-            ).first()
+        if not check_validate:
+            return False
 
-            if user:
-                self.username.errors.append(
-                    "User with that name already exists"    
-                )
-                return False
-            return True
+        user = User.query.filter_by(
+            username=self.username.data
+        ).first()
+
+        if user:
+            self.username.errors.append(
+                "User with that name already exists"
+            )
+            return False
+        return True
 
 
-    class PostForm(Form):
-        title = StringField('Title', [
-            DataRequired(),
-            Length(max=255)
-        ])
-        text = TextAreaField('Content', [DataRequired()])
+class PostForm(Form):
+    title = StringField('Title', [
+        DataRequired(),
+        Length(max=255)
+    ])
+    text = TextAreaField('Content', [DataRequired()])
