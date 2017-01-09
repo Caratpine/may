@@ -3,6 +3,7 @@ from flask import render_template, Blueprint, redirect, url_for
 from sqlalchemy import func
 from ..forms import CommentForm, PostForm
 from ..models import User, Post, Tag, Comment, db, tags
+from pprint import pprint
 
 blog_blueprint = Blueprint(
     'blog',
@@ -69,6 +70,7 @@ def tag(tag_name):
     tag = Tag.query.filter_by(title=tag_name).first_or_404()
     posts = tag.posts.order_by(Post.publish_date.desc()).all()
     recent, top_tags = sidebar_data()
+    pprint(posts[0].text)
 
     return render_template(
         'tag.html',

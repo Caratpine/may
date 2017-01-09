@@ -26,7 +26,7 @@ class CommentForm(Form):
         validators=[DataRequired(), Length(max=3)]
     )
     text = TextAreaField(u'Comment', validators=[DataRequired()])
-    email = TextAreaField(u'Email', validators=[CustomEmail()])
+    # email = TextAreaField(u'Email', validators=[CustomEmail()])
 
 
 class LoginForm(Form):
@@ -47,13 +47,13 @@ class LoginForm(Form):
 
         if not user:
             self.username.errors.append(
-                'Invalid username or password'    
+                'Invalid username or password'
             )
             return False
 
         if not user.check_password(self.password.data):
             self.username.errors.append(
-                'Invalid username or password'    
+                'Invalid username or password'
             )
             return False
         return True
