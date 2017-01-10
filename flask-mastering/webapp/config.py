@@ -10,3 +10,8 @@ class DevConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost/test?charset=utf8'
     SQLALCHEMY_ECHO = True
+    MONGODB_SETTINGS = {
+        'db': 'local',
+        'host': 'localhost',
+        'port': 27017
+    }

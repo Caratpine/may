@@ -1,7 +1,9 @@
 from flask.ext.sqlalchemy import SQLAlchemy
 from webapp.extensions import bcrypt
+from flask.ext.mongoengine import MongoEngine
 
 db = SQLAlchemy()
+mongo = MongoEngine()
 
 tags = db.Table(
     'post_tags',

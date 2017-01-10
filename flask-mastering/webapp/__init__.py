@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for
 from config import DevConfig
-from models import db
+from models import db, mongo
 from controllers.blog import blog_blueprint
 from controllers.main import main_blueprint
 from extensions import bcrypt
@@ -11,6 +11,7 @@ def create_app(object_name):
     app.config.from_object(object_name)
 
     db.init_app(app)
+    mongo.init_app(app)
     bcrypt.init_app(app)
 
     @app.route('/')
