@@ -3,7 +3,7 @@ from config import DevConfig
 from models import db, mongo
 from controllers.blog import blog_blueprint
 from controllers.main import main_blueprint
-from extensions import bcrypt
+from extensions import bcrypt, celery
 
 
 def create_app(object_name):
@@ -13,6 +13,7 @@ def create_app(object_name):
     db.init_app(app)
     mongo.init_app(app)
     bcrypt.init_app(app)
+    celery.init_app(app)
 
     @app.route('/')
     def index():

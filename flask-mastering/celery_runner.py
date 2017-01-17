@@ -9,7 +9,7 @@ def make_celery(app):
     celery = Celery(
         app.import_name,
         broker=app.config['CELERY_BROKER_URL'],
-        backend=app.config['CELERY_BACKEND']
+        backend=app.config['CELERY_RESULT_BACKEND']
     )
 
     celery.conf.update(app.config)
@@ -28,3 +28,5 @@ def make_celery(app):
 
 flask_app = create_app(config.DevConfig)
 celery = make_celery(flask_app)
+
+
