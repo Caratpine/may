@@ -1,3 +1,6 @@
+import datetime
+
+
 class Config(object):
     SECRET_KEY = "4ad2d8b02bd732fcf2cb8f57af74af00%"
 
@@ -17,3 +20,11 @@ class DevConfig(Config):
     }
     CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
     CELERY_RESULT_BACKEND= 'redis://localhost/0'
+
+    CELERYBEAT_SCHEDULE = {
+        'log-every-30-seconds': {
+            'task': 'webapp.tasks.log',
+            'schedule': datetime.timedelta(seconds=10),
+            'args': ("hello world",)
+        }
+    }

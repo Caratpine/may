@@ -81,3 +81,11 @@ class Tag(db.Model):
         return "<Tag '{}'>".format(self.title)
 
 
+class Reminder(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    date = db.Column(db.DateTime())
+    email = db.Column(db.String(255))
+    text = db.Column(db.Text())
+
+    def __repr__(self):
+        return "<Reminder '{}'>".format(self.text[:20])
